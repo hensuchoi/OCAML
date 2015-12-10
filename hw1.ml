@@ -117,6 +117,7 @@ let rec listReverse  m =
 
 
 
+let _= aux [1;2;3];;
 
 
 let _ = listReverse [1; 2; 3; 4]
@@ -150,6 +151,7 @@ let palindrome w =
 let _ = palindrome "malayalam"
 let _ = palindrome "myxomatosis"
 
+let _ = palindrome "aba"
 
 
 
