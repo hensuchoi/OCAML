@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>CSE 130, SP15 - Homework #3 (160pts)</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../css/syntax-rj.css" />
+    </head>
+    <body>
+      <h1>CSE 130 SP15- Homework #3 (160pts) </h1>
+        <div id="navigation">
+        <a href="../index.html">Home</a>
+        <a href="../grades.html">Grading</a>
+		<a href="../lectures.html">Lectures</a>
+	    <a href="../assignments.html">Assignments</a>
+	    <a href="../links.html">Links</a>
+	    <a href="https://piazza.com/class#spring2015/cse130">Piazza</a>
+        </div>
+	<br />
+	<br />
+	<h2 id="due-by-500-pm-on-friday-may-1-2015">Due by 5:00 pm on Friday, May 1, 2015</h2>
+<h2 id="overview">Overview</h2>
+<p>The overall objective of this assignment is to expose you to fold, <em>fold</em>, and more <strong>fold</strong>. And just when you think you’ve had enough, <strong>FOLD</strong>.</p>
+<p>The assignment is in the file <a href="../static/hw3.ml">hw3.ml</a> that you need to download, edit and submit. As before, your task is to replace each expression of the form</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml">failwith <span class="st">&quot;to be written&quot;</span></code></pre>
+<p>with the the appropriate OCaml code for each of those expressions.</p>
+<p><strong>Note:</strong> All the solutions can be done using the purely functional fragment of OCaml, using constructs covered in class, and most require the use of <strong>recursion</strong>. Solutions using imperative features such as references, while loops or library functions will receive <strong>no credit</strong> It is a good idea to start this assignment early; ML programming, while quite simple (when you know how), often seems somewhat foreign at first, particularly when it comes to recursion and list manipulation.</p>
+<h2 id="assignment-testing-and-evaluation">Assignment Testing and Evaluation</h2>
+<p>Your functions/programs <strong>must</strong> compile and run with <code>ocaml-top</code> on <code>ieng6.ucsd.edu</code>.</p>
+<p>Most of the points, will be awarded automatically, by <strong>evaluating your functions against a given test suite</strong>. <a href="../static/hw3.ml">hw3.ml</a> contains a very small suite of tests which gives you a flavor of of these tests.</p>
+<p><img src="../static/gui-button-ff.png" width="400" /></p>
+<p>At any point, hit fast-forward button (shown above) labeled <em>run the current program as far as possible</em> to get a report on how your code stacks up against the simple tests.</p>
+<p>The last line of the interactive shell must contain the word:</p>
+<pre><code>130&gt;&gt;Compiled
+
+- : int * int = (SCORE, TOTAL) </code></pre>
+<p>where <code>SCORE</code> and <code>TOTAL</code> are a pair of integers, reflecting your score and the max possible score on the sample tests.</p>
+<p><strong>If instead an error message appears, your code will receive a zero.</strong></p>
+<p>If for some problem, you cannot get the code to compile, leave it as is with the <code>failwith ...</code> with your partial solution enclosed below as a comment.</p>
+<p>The other lines will give you a readout for each test. You are encouraged to try to understand the testing code, but you will not be graded on this.</p>
+<h2 id="submission-instructions">Submission Instructions</h2>
+<ol style="list-style-type: decimal">
+<li><p>Keep your <code>hw3.ml</code> loaded (and saved) in the editor pane,</p></li>
+<li><p>Hit the green tick mark button to <strong>submit</strong> your code.</p></li>
+</ol>
+<p><img src="../static/gui-button-submit.png" width="400" /></p>
+<p><code>turnin</code> will provide you with a confirmation of the submission process; make sure that the size of the file indicated by <code>turnin</code> matches the size of your file. See the ACS Web page on <a href="http://acs.ucsd.edu/info/turnin.php">turnin</a> for more information on the operation of the program.</p>
+<h2 id="problem-1-warm-up">Problem #1: Warm-Up</h2>
+<h3 id="a-15-points">(a) 15 points</h3>
+<p>Fill in the skeleton given for <code>sqsum</code>, which uses <code>List.fold_left</code> to get an OCaml function</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> sqsum : <span class="dt">int</span> <span class="dt">list</span> -&gt; <span class="dt">int</span> </code></pre>
+<p>such that <code>sqsum [x1;...;xn]</code> returns the integer <code>x1^2 + ... + xn^2</code></p>
+<p>Your task is to fill in the appropriate values for</p>
+<ol style="list-style-type: decimal">
+<li>the folding function <code>f</code> and</li>
+<li>the base case <code>base</code>.</li>
+</ol>
+<p>Once you have implemented the function, you should get the following behavior at the OCaml prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># sqsum [];;
+- : <span class="dt">int</span> = <span class="dv">0</span>
+
+# sqsum [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>;<span class="dv">4</span>];;
+- : <span class="dt">int</span> = <span class="dv">30</span>
+
+# sqsum [(<span class="dv">-1</span>); (<span class="dv">-2</span>); (<span class="dv">-3</span>); (<span class="dv">-4</span>)];;
+- : <span class="dt">int</span> = <span class="dv">30</span></code></pre>
+<h3 id="b-30-points">(b) 30 points</h3>
+<p>Fill in the skeleton given for <code>pipe</code> which uses <code>List.fold_left</code> to get an OCaml function</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> pipe : ('a -&gt; 'a) <span class="dt">list</span> -&gt; ('a -&gt; 'a)</code></pre>
+<p>such that <code>pipe [f1;...;fn]</code> (where <code>f1,...,fn</code> are functions!) returns a function <code>f</code> such that for any <code>x</code>, we have <code>f x</code> returns result <code>fn(...(f2(f1 x)))</code>.</p>
+<p>Again, your task is to fill in the appropriate values for</p>
+<ol style="list-style-type: decimal">
+<li>the folding function <code>f</code> and</li>
+<li>the base case <code>base</code>.</li>
+</ol>
+<p>Once you have implemented the function, you should get the following behavior at the OCaml prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># pipe [] <span class="dv">3</span>;;
+- :  <span class="dt">int</span> =  <span class="dv">3</span> 
+# pipe [(<span class="kw">fun</span> x -&gt; x+x); (<span class="kw">fun</span> x -&gt; x + <span class="dv">3</span>)] <span class="dv">3</span> ;;
+- :  <span class="dt">int</span> =  <span class="dv">9</span> 
+# pipe [(<span class="kw">fun</span> x -&gt; x + <span class="dv">3</span>);(<span class="kw">fun</span> x-&gt; x + x)] <span class="dv">3</span>;;
+- :  <span class="dt">int</span> =  <span class="dv">12</span></code></pre>
+<h3 id="c-20-points">(c) 20 points</h3>
+<p>Fill in the skeleton given for <code>sepConcat</code>, which uses <code>List.fold_left</code> to get an OCaml function</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> sepConcat : <span class="dt">string</span> -&gt; <span class="dt">string</span> <span class="dt">list</span> -&gt; <span class="dt">string</span></code></pre>
+<p>Intuitively, the expression <code>sepConcat sep [s1;...;sn]</code> where <code>sep</code> is a string to be used as a separator, and <code>[s1;...;sn]</code> is a list of strings. <code>sepConcat sep []</code> should return the empty string <code>&quot;&quot;</code>. <code>sepConcat sep [s]</code> should return just the string <code>s</code>. Otherwise, if there are more than one string, in the list, then the output should be the string <code>s1 ^ sep ^ s2 ^ ... ^ sep ^ sn</code>. You should only modify the parts of the skeleton consisting of <code>failwith &quot;to be implemented&quot;</code>. You will need to define the function <code>f</code>, and give values for <code>base</code> and <code>l</code>.</p>
+<p>Once you have filled in these parts, you should get the following behavior at the OCaml prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># sepConcat <span class="st">&quot;, &quot;</span> [<span class="st">&quot;foo&quot;</span>;<span class="st">&quot;bar&quot;</span>;<span class="st">&quot;baz&quot;</span>];;
+- : <span class="dt">string</span> = <span class="st">&quot;foo, bar, baz&quot;</span>
+
+# sepConcat <span class="st">&quot;---&quot;</span> [];;
+- : <span class="dt">string</span> = <span class="st">&quot;&quot;</span>
+
+# sepConcat <span class="st">&quot;&quot;</span> [<span class="st">&quot;a&quot;</span>;<span class="st">&quot;b&quot;</span>;<span class="st">&quot;c&quot;</span>;<span class="st">&quot;d&quot;</span>;<span class="st">&quot;e&quot;</span>];;
+- : <span class="dt">string</span> = <span class="st">&quot;abcde&quot;</span>
+
+# sepConcat <span class="st">&quot;X&quot;</span> [<span class="st">&quot;hello&quot;</span>];;
+- : <span class="dt">string</span> = <span class="st">&quot;hello&quot;</span></code></pre>
+<h3 id="d-10-points">(d) 10 points</h3>
+<p>Implement the curried OCaml function</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> stringOfList : ('a -&gt; <span class="dt">string</span>) -&gt; 'a <span class="dt">list</span> -&gt; <span class="dt">string</span></code></pre>
+<p>such that <code>stringOfList f [x1;...;xn]</code> should return the string <code>&quot;[&quot; ^ (f x1) ^ &quot;; &quot; ^ ... ^ (f xn) ^ &quot;]&quot;</code></p>
+<p>This function can be implemented on one line, <strong>without using any recursion</strong> by calling <code>List.map</code> and <code>sepConcat</code> with appropriate inputs. Once you have completed this function, you should get the following behavior at the OCaml prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># stringOfList string_of_int [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>;<span class="dv">4</span>;<span class="dv">5</span>;<span class="dv">6</span>];;
+- : <span class="dt">string</span> = <span class="st">&quot;[1; 2; 3; 4; 5; 6]&quot;</span>
+
+# stringOfList (<span class="kw">fun</span> x -&gt; x) [<span class="st">&quot;foo&quot;</span>];;
+- : <span class="dt">string</span> = <span class="st">&quot;[foo]&quot;</span>
+
+# stringOfList (stringOfList string_of_int) [[<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>];[<span class="dv">4</span>;<span class="dv">5</span>];[<span class="dv">6</span>];[]];;
+- : <span class="dt">string</span> = <span class="st">&quot;[[1; 2; 3]; [4; 5]; [6]; []]&quot;</span></code></pre>
+<h2 id="problem-2-big-numbers">Problem #2: Big Numbers</h2>
+<p>The OCaml type <code>int</code> only contains values upto a certain size. For example,</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="dv">99999999999999999999999999999999999999999999999</span> ;;
+<span class="dt">Error</span>: <span class="dt">Integer</span> literal exceeds the range <span class="kw">of</span> representable integers <span class="kw">of</span> <span class="kw">type</span> <span class="dt">int</span></code></pre>
+<p>You will now implement functions to manipulate arbitrarily large numbers represented as <em>lists of integers</em>.</p>
+<h3 id="a-10-5-10-points">(a) 10 + 5 + 10 points</h3>
+<p>Write a curried function</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> clone : 'a -&gt; <span class="dt">int</span> -&gt; 'a <span class="dt">list</span></code></pre>
+<p>such that <code>clone x n</code> returns a list of <code>n</code> copies of the value <code>x</code>. If the integer <code>n</code> is <code>0</code> or negative, then <code>clone</code> should return the empty list. Once you have implemented the function, you should get the following behavior at the OCaml prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># clone <span class="dv">3</span> <span class="dv">5</span>;;
+- :  <span class="dt">int</span> <span class="dt">list</span> = [<span class="dv">3</span>; <span class="dv">3</span>; <span class="dv">3</span>; <span class="dv">3</span>; <span class="dv">3</span>]
+
+# clone <span class="st">&quot;foo&quot;</span> <span class="dv">2</span>;; 
+- :  <span class="dt">string</span> <span class="dt">list</span> = [<span class="st">&quot;foo&quot;</span>; <span class="st">&quot;foo&quot;</span>]
+
+# clone clone (<span class="dv">-3</span>);;
+- :  ('_a -&gt; <span class="dt">int</span> -&gt; '_a <span class="dt">list</span>) <span class="dt">list</span> = []</code></pre>
+<p>Use <code>clone</code> to write a curried function</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> padZero : <span class="dt">int</span> <span class="dt">list</span> -&gt; <span class="dt">int</span> <span class="dt">list</span> -&gt; <span class="dt">int</span> <span class="dt">list</span>  * <span class="dt">int</span> <span class="dt">list</span></code></pre>
+<p>which takes two lists: <code>[x1;...;xn]</code> <code>[y1;...;ym]</code> and adds zeros in front of the shorter list to make the lists equal.</p>
+<p>Your implementation should *not** be recursive.</p>
+<p>Once you have implemented the function, you should get the following behavior at the OCaml prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># padZero [<span class="dv">9</span>;<span class="dv">9</span>] [<span class="dv">1</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">2</span>];;
+- :  <span class="dt">int</span> <span class="dt">list</span> * <span class="dt">int</span> <span class="dt">list</span>   =  ([<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">9</span>;<span class="dv">9</span>],[<span class="dv">1</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">2</span>]) 
+
+# padZero [<span class="dv">1</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">2</span>] [<span class="dv">9</span>;<span class="dv">9</span>];; 
+- :  <span class="dt">int</span> <span class="dt">list</span> * <span class="dt">int</span> <span class="dt">list</span> =  ([<span class="dv">1</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">2</span>],[<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">9</span>;<span class="dv">9</span>])</code></pre>
+<p>Next, write a function</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> removeZero : <span class="dt">int</span> <span class="dt">list</span> -&gt; <span class="dt">int</span> <span class="dt">list</span></code></pre>
+<p>that takes a list and removes a prefix of leading zeros.</p>
+<p>Once you have implemented the function, you should get the following behavior at the OCaml prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># removeZero [<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">1</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">2</span>];;
+- :  <span class="dt">int</span> <span class="dt">list</span>    =  [<span class="dv">1</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">2</span>]
+
+# removeZero [<span class="dv">9</span>;<span class="dv">9</span>];; 
+- :  <span class="dt">int</span> <span class="dt">list</span> =  [<span class="dv">9</span>;<span class="dv">9</span>]
+
+# removeZero [<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">0</span>];;
+- :  <span class="dt">int</span> <span class="dt">list</span> =  []</code></pre>
+<h3 id="b-25-points">(b) 25 points</h3>
+<p>Let us use the list <code>[d1;d2;...;dn]</code>, where each <code>di</code> is between <code>0</code> and <code>9</code>, to represent the (positive) <strong>big-integer</strong> <code>d1d2...dn</code>. For example, let <code>[9;9;9;9;9;9;9;9;9;9]</code> represent the big-integer <code>9999999999</code>. Fill out the implementation for</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> bigAdd : <span class="dt">int</span> <span class="dt">list</span> -&gt; <span class="dt">int</span> <span class="dt">list</span> -&gt; <span class="dt">int</span> <span class="dt">list</span></code></pre>
+<p>so that it takes two integer lists, where each integer is between <code>0</code> and <code>9</code> and returns the list corresponding to the addition of the two big-integers. Again, you have to fill in the implementation to supply the appropriate values to <code>f</code>, <code>base</code>, <code>args</code>. Once you have implemented the function, you should get the following behavior at the OCaml prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># bigAdd [<span class="dv">9</span>;<span class="dv">9</span>] [<span class="dv">1</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">2</span>];;
+- :  <span class="dt">int</span> <span class="dt">list</span>   =  [<span class="dv">1</span>;<span class="dv">1</span>;<span class="dv">0</span>;<span class="dv">1</span>]
+
+# bigAdd [<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>] [<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>];; 
+- :  <span class="dt">int</span> <span class="dt">list</span>  =  [<span class="dv">1</span>;<span class="dv">0</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">8</span>]</code></pre>
+<h3 id="c-15-20-points">(c) 15 + 20 points</h3>
+<p>Next you will write functions to multiply two big integers. First write a function</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> mulByDigit : <span class="dt">int</span> -&gt; <span class="dt">int</span> <span class="dt">list</span> -&gt; <span class="dt">int</span> <span class="dt">list</span> </code></pre>
+<p>which takes an integer digit and a big integer, and returns the big integer list which is the result of multiplying the big integer with the digit. Once you have implemented the function, you should get the following behavior at the OCaml prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># mulByDigit <span class="dv">9</span> [<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>];;
+- :  <span class="dt">int</span> <span class="dt">list</span>  =  [<span class="dv">8</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">1</span>]</code></pre>
+<p>Now, using <code>mulByDigit</code>, fill in the implementation of</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> bigMul : <span class="dt">int</span> <span class="dt">list</span> -&gt; <span class="dt">int</span> <span class="dt">list</span> -&gt; <span class="dt">int</span> <span class="dt">list</span></code></pre>
+<p>Again, you have to fill in implementations for <code>f</code> , <code>base</code> , <code>args</code> only. Once you are done, you should get the following behavior at the prompt:</p>
+<pre class="sourceCode ocaml"><code class="sourceCode ocaml"># bigMul [<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>] [<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>];; 
+- :  <span class="dt">int</span> <span class="dt">list</span>  =  [<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">8</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">1</span>]
+
+# bigMul [<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>] [<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>];; 
+- :  <span class="dt">int</span> <span class="dt">list</span>  =  [<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">8</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">0</span>;<span class="dv">1</span>]</code></pre>
+    </body>
+
+    <div id="footer"> 
+      Site generated with <a href="http://jaspervdj.be/hakyll">hakyll</a>
+    </div> 
+</html>

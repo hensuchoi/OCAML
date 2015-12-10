@@ -1,0 +1,11 @@
+seven 1
+teven 2
+reven 3
+words 4
+sords 5
+apple 7
+qatri 9
+salts 10
+setem 2
+rettm 3
+

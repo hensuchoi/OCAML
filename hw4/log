@@ -1,0 +1,29 @@
+NanoML 
+ 
+$ ./nanoml.top test.ml 
+out: Error: Parsing.Parse_error 
+Cannot load required shared library dllunix.
+Reason: /home/linux/ieng6/cs130f/public/lib/ocaml/dllunix.so: /home/linux/ieng6/cs130f/public/lib/ocaml/dllunix.so: undefined symbol: caml_local_roots.
+130>>1a - "true" [pass] (1)
+130>>1a - " 894\n\t" [pass] (1)
+130>>1a - "Z" [pass] (1)
+130>>1b - let x = 5 in x [pass] (1)
+130>>1b - fun x -> 5 [pass] (1)
+130>>1b - if a then b else c [pass] (1)
+130>>1c - x+2 [pass] (1)
+130>>1c - x<=2 [pass] (1)
+130>>1c - x&&2 [pass] (1)
+130>>1d - 1+(2*(3)) [pass] (1)
+130>>1d - f x [pass] (1)
+130>>1e - e::f [pass] (1)
+130>>2a - c1 (evn is [c0=0,c1=1,c2=2,c3=3,c0=4,c1=5,bt=true,bf=false]) [pass] (2)
+130>>2a - (20-c1)*(c2+c3) [pass] (3)
+130>>2b - bt=c3 [pass] (1)
+130>>2b - bt||c3 [pass] (1)
+130>>2c - let x = 4 in x [pass] (1)
+130>>2d - (fun x->x*x) 5 [pass] (2)
+130>>2e - let rec even = fun x -> let rec odd = fun x -> if x = 0 then false else even (x-1) in if x = 0 then true else odd (x-1) in even 23 [pass] (3)
+130>>Results: Score/Max = 25 / 25 
+
+130>>Compiled
+
